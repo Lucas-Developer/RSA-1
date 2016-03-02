@@ -38,8 +38,7 @@ public class AppTest
     {
       String msgOrig = "Hello World!";
       String decrypted = null;
-    	RSA rsa = new RSA(128);
-//      RSA rsa = new RSA(1024);
+      RSA rsa = new RSA(64);
 
       System.out.println("p: " + rsa.getP());
       System.out.println("q: " + rsa.getQ());

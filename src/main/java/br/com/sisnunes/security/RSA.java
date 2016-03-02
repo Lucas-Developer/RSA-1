@@ -16,8 +16,8 @@ public class RSA
 	public RSA(int bitlen)
 	{
 		SecureRandom r = new SecureRandom();
-		_p = new BigInteger(bitlen, 100, r);
-		_q = new BigInteger(bitlen, 100, r);
+		_p = new BigInteger(bitlen, 100, r).nextProbablePrime();
+		_q = new BigInteger(bitlen, 100, r).nextProbablePrime();
 		_n = _p.multiply(_q);
 		_t = (_p.subtract(BigInteger.ONE)).multiply(_q.subtract(BigInteger.ONE));
 		_e = getCoPrime(_t);
