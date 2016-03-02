@@ -12,6 +12,8 @@ public class RSA
 	private BigInteger _t;
 	private BigInteger _e;
 	private BigInteger _d;
+  private Key _pubKey;
+  private Key _privKey;
 
 	public RSA(int bitlen)
 	{
@@ -22,6 +24,8 @@ public class RSA
 		_t = (_p.subtract(BigInteger.ONE)).multiply(_q.subtract(BigInteger.ONE));
 		_e = getCoPrime(_t);
 		_d = _e.modInverse(_t);
+    _pubKey = new Key(_n, _e);
+    _privKey = new Key(_n, _d);
 	}
 	
 	public int mdc(int a, int b)
@@ -58,7 +62,7 @@ public class RSA
 		return c;
 	}
 	
-	private BigInteger encrypt(BigInteger msg)
+/*	private BigInteger encrypt(BigInteger msg)
 	{
 		return msg.modPow(_e, _n);
 	}
@@ -80,7 +84,7 @@ public class RSA
 	{
 		byte[] msg = decrypt(new BigInteger(cifer)).toByteArray();
 		return new String(msg);
-	}
+	}*/
 
 	public BigInteger getP()
 	{
@@ -111,4 +115,14 @@ public class RSA
 	{
 		return _d;
 	}
+
+  public Key getPublicKey()
+  {
+    return _pubKey;
+  }
+
+  public Key getPrivateKey()
+  {
+    return _privKey;
+  }
 }

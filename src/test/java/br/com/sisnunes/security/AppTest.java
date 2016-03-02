@@ -37,7 +37,6 @@ public class AppTest
     public void testApp()
     {
       String msgOrig = "Hello World!";
-      String decrypted = null;
       RSA rsa = new RSA(64);
 
       System.out.println("p: " + rsa.getP());
@@ -50,12 +49,19 @@ public class AppTest
 
       assertTrue(rsa.isCoPrime(rsa.getE(), rsa.getT()));
 
-      byte[] crypted = rsa.enc(msgOrig);
-      decrypted = rsa.dec(crypted);
+      Cipher cipher = new Cipher();
+      byte[] encrypted = cipher.encrypt(msgOrig, rsa.getPublicKey());
+//      String decrypted = cipher.decrypt(encrypted, rsa.getPublicKey());
+      String decrypted = cipher.decrypt(encrypted, rsa.getPrivateKey());
 
       System.out.println("orig: " + msgOrig);
-      System.out.println("enc: " + Base64.getEncoder().encodeToString(crypted));
+      System.out.println("enc: " + Base64.getEncoder().encodeToString(encrypted));
       System.out.println("dec: " + decrypted);
+
+      assertEquals(msgOrig, decrypted);
+
+      encrypted = cipher.encrypt(msgOrig, rsa.getPrivateKey());
+      decrypted = cipher.decrypt(encrypted, rsa.getPublicKey());
 
       assertEquals(msgOrig, decrypted);
     }

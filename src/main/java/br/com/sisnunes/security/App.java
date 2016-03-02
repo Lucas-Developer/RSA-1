@@ -10,12 +10,13 @@ public class App
     {
     	String msg = "Hello World!";
     	RSA rsa = new RSA(128);
-    	
-    	byte[] crypt = rsa.enc(msg);
+
+			Cipher cipher = new Cipher();
+    	byte[] crypt = cipher.encrypt(msg, rsa.getPublicKey());
     	
     	System.out.println("orig: " + msg);
     	System.out.println("enc: " + new String(crypt));
-    	System.out.println("dec: " + rsa.dec(crypt));
+    	System.out.println("dec: " + cipher.decrypt(crypt, rsa.getPrivateKey()));
     			
     }
 }
